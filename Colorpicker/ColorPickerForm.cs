@@ -28,7 +28,8 @@ namespace Colorpicker
         {
             this.Left = Properties.Settings.Default.PosLeft;
             this.Top = Properties.Settings.Default.PosTop;
-            this.selector = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.Selector);
+            Color color = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.Selector);
+            this.selector = color;
             this.TopMost = Properties.Settings.Default.TopMost;
 
             this.ShowInTaskbar = false;
@@ -37,10 +38,7 @@ namespace Colorpicker
             this.Height = 80;
             this.Width = 100;
 
-            this.TransparencyKey = Color.LimeGreen;
-            this.selector = Color.Red;
-
-            
+            this.TransparencyKey = Color.LimeGreen;           
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -198,7 +196,8 @@ namespace Colorpicker
         {
             Properties.Settings.Default.PosLeft = this.Left;
             Properties.Settings.Default.PosTop = this.Top;
-            Properties.Settings.Default.Selector = System.Drawing.ColorTranslator.ToHtml(this.selector);
+            string color = System.Drawing.ColorTranslator.ToHtml(this.selector);
+            Properties.Settings.Default.Selector = color;
             Properties.Settings.Default.TopMost = this.TopMost;
             Properties.Settings.Default.Save();
         }
