@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Colorpicker
+namespace ColorProbe
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Colorpicker
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ColorPickerForm());
+            Application.Run(new ColorProbeForm());
         }
     }
 }

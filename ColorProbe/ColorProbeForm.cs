@@ -9,12 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Colorpicker
+namespace ColorProbe
 {
     
-    public partial class ColorPickerForm : Form
+    public partial class ColorProbeForm : Form
     {
-        public ColorPickerForm()
+        public ColorProbeForm()
         {
             InitializeComponent();
         }
@@ -24,7 +24,7 @@ namespace Colorpicker
             this.Close();
         }
 
-        private void ColorPickerForm_Load(object sender, EventArgs e)
+        private void ColorProbeForm_Load(object sender, EventArgs e)
         {
             this.Left = Properties.Settings.Default.PosLeft;
             this.Top = Properties.Settings.Default.PosTop;
@@ -49,7 +49,7 @@ namespace Colorpicker
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        private void ColorPickerForm_MouseDown(object sender, MouseEventArgs e)
+        private void ColorProbeForm_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -82,7 +82,7 @@ namespace Colorpicker
             return Color.FromArgb(255, (a >> 0) & 0xff, (a >> 8) & 0xff, (a >> 16) & 0xff);
         }
 
-        private void ColorPickerForm_Move(object sender, EventArgs e)
+        private void ColorProbeForm_Move(object sender, EventArgs e)
         {
             this.Invalidate();
         }
@@ -90,7 +90,7 @@ namespace Colorpicker
         Color color;
         Color selector;
 
-        private void ColorPickerForm_Paint(object sender, PaintEventArgs e)
+        private void ColorProbeForm_Paint(object sender, PaintEventArgs e)
         {
             int t = this.Top;
             int l = this.Left;
@@ -125,7 +125,7 @@ namespace Colorpicker
             );
         }
 
-        private void ColorPickerForm_KeyDown(object sender, KeyEventArgs e)
+        private void ColorProbeForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F10 || e.KeyCode == Keys.Escape)
             {
@@ -192,7 +192,7 @@ namespace Colorpicker
             }
         }
 
-        private void ColorPickerForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void ColorProbeForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.PosLeft = this.Left;
             Properties.Settings.Default.PosTop = this.Top;
@@ -214,7 +214,7 @@ namespace Colorpicker
             topToolStripMenuItem.Checked = this.TopMost;
         }
 
-        private void ColorPickerForm_Activated(object sender, EventArgs e)
+        private void ColorProbeForm_Activated(object sender, EventArgs e)
         {
         }
 
