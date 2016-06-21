@@ -35,10 +35,10 @@ namespace ColorProbe
             this.ShowInTaskbar = false;
             this.ShowInTaskbar = true;
 
-            this.Height = 80;
+            this.Height = 100;
             this.Width = 100;
 
-            this.TransparencyKey = Color.LimeGreen;           
+            TransparencyKey = BackColor = Color.LavenderBlush;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -51,6 +51,8 @@ namespace ColorProbe
 
         private void ColorProbeForm_MouseDown(object sender, MouseEventArgs e)
         {
+            this.cicle = 0;
+
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
@@ -96,26 +98,58 @@ namespace ColorProbe
             int l = this.Left;
             int w = this.Width;
 
+            Graphics g = e.Graphics;
 
-            // top space
-            System.Drawing.SolidBrush myBrushTop = new System.Drawing.SolidBrush(
+            // background
+            SolidBrush myBrushTop = new SolidBrush(
                 this.TransparencyKey
             );
-            e.Graphics.FillRectangle(myBrushTop, new Rectangle(0, 0, 100, 50));
+            g.FillRectangle(myBrushTop, new Rectangle(0, 0, this.Width, this.Height));
 
             //botom space
             this.color = GetColorAt(l+50, t-1);
-            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(
+            SolidBrush myBrush = new SolidBrush(
                  this.color
             );
-            e.Graphics.FillRectangle(myBrush, new Rectangle(0, 50, 100, 30));
+            g.FillRectangle(myBrush, new Rectangle(0, 50, 100, 30));
 
 
-            System.Drawing.Pen myPen = new System.Drawing.Pen(this.selector);
-            e.Graphics.DrawLine(myPen, 50, 0, 50, 50);
-            e.Graphics.DrawLine(myPen, 0, 50, 100, 50);
-            e.Graphics.DrawLine(myPen, 0, 50, 0, 80);
-            e.Graphics.DrawLine(myPen, 0, 79, 30, 79);
+            Pen myPen = new Pen(this.selector);
+            g.DrawLine(myPen, 50, 0, 50, 50);//picker
+            g.DrawLine(myPen, 0, 50, 100, 50); //long
+            g.DrawLine(myPen, 0, 50, 0, 79);// most left
+            g.DrawLine(myPen, 0, 79, 30, 79);// short bottom
+
+            
+
+            if (cicle > 0) {
+                int invers = (this.cicleMax - cicle);
+
+                SolidBrush animationBrush = new SolidBrush(
+                    this.selector
+                );
+
+                double angle = 2 * Math.PI * (double)((100.0 - cicle)/100);
+                int x = (int)(50.0 + 40.0 * Math.Cos(angle));
+                int y = (int)(50.0 + 40.0 * Math.Sin(angle));
+
+                Pen myPen2 = new Pen(this.selector,1);
+                g.FillEllipse(animationBrush, x, y, 5, 5);
+
+
+                angle = 2 * Math.PI * (double)((100.0 - cicle) / 100) + Math.PI * 0.5;
+                x = (int)(50.0 + 30.0 * Math.Cos(angle));
+                y = (int)(50.0 + 30.0 * Math.Sin(angle));
+
+                g.FillEllipse(animationBrush, x, y, 7, 7);
+
+                angle = 2 * Math.PI * (double)((100.0 - cicle) / 100) + Math.PI;
+                x = (int)(50.0 + 25.0 * Math.Cos(angle));
+                y = (int)(50.0 + 25.0 * Math.Sin(angle));
+
+                g.FillEllipse(animationBrush, x, y, 5, 5);
+
+            }
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -216,11 +250,27 @@ namespace ColorProbe
 
         private void ColorProbeForm_Activated(object sender, EventArgs e)
         {
+            if (cicle == 0)
+            {
+                cicle = cicleMax; // start animation
+            }
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (this.color != GetColorAt(this.Left + 50, this.Top - 1)) {
+                this.Invalidate();
+            }
+        }
+
+        int cicle = 0;
+        int cicleMax = 100;
+
+        private void timerAnimation_Tick(object sender, EventArgs e)
+        {
+            if (cicle > 0) {
+                --cicle;
                 this.Invalidate();
             }
         }

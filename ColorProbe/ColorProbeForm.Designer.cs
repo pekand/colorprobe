@@ -37,7 +37,8 @@
             this.topToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerLive = new System.Windows.Forms.Timer(this.components);
+            this.timerAnimation = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,10 +89,16 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // timer1
+            // timerLive
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerLive.Enabled = true;
+            this.timerLive.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timerAnimation
+            // 
+            this.timerAnimation.Enabled = true;
+            this.timerAnimation.Interval = 5;
+            this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
             // 
             // ColorProbeForm
             // 
@@ -126,7 +133,8 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pickerColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem topToolStripMenuItem;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerLive;
+        private System.Windows.Forms.Timer timerAnimation;
     }
 }
 
