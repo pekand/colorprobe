@@ -51,7 +51,7 @@ namespace ColorProbe
 
         private void ColorProbeForm_MouseDown(object sender, MouseEventArgs e)
         {
-            this.cicle = 0;
+            this.animationState = 0;
 
             if (e.Button == MouseButtons.Left)
             {
@@ -122,14 +122,14 @@ namespace ColorProbe
 
             
 
-            if (cicle > 0) {
-                int invers = (this.cicleMax - cicle);
+            if (animationState > 0) {
+                int invers = (this.animationStateMax - animationState);
 
                 SolidBrush animationBrush = new SolidBrush(
                     this.selector
                 );
 
-                double angle = 2 * Math.PI * (double)((100.0 - cicle)/100);
+                double angle = 2 * Math.PI * (double)((100.0 - animationState)/100);
                 int x = (int)(50.0 + 40.0 * Math.Cos(angle));
                 int y = (int)(50.0 + 40.0 * Math.Sin(angle));
 
@@ -137,13 +137,13 @@ namespace ColorProbe
                 g.FillEllipse(animationBrush, x, y, 5, 5);
 
 
-                angle = 2 * Math.PI * (double)((100.0 - cicle) / 100) + Math.PI * 0.5;
+                angle = 2 * Math.PI * (double)((100.0 - animationState) / 100) + Math.PI * 0.5;
                 x = (int)(50.0 + 30.0 * Math.Cos(angle));
                 y = (int)(50.0 + 30.0 * Math.Sin(angle));
 
                 g.FillEllipse(animationBrush, x, y, 7, 7);
 
-                angle = 2 * Math.PI * (double)((100.0 - cicle) / 100) + Math.PI;
+                angle = 2 * Math.PI * (double)((100.0 - animationState) / 100) + Math.PI;
                 x = (int)(50.0 + 25.0 * Math.Cos(angle));
                 y = (int)(50.0 + 25.0 * Math.Sin(angle));
 
@@ -209,6 +209,14 @@ namespace ColorProbe
                     this.Top = this.Top + add;
                 }
             }
+
+            if (e.KeyCode == Keys.F5)
+            {
+                this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+                this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+                this.WindowState = FormWindowState.Normal;
+                animationState = 100; 
+            }
         }
 
         private void pickerColorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -250,9 +258,9 @@ namespace ColorProbe
 
         private void ColorProbeForm_Activated(object sender, EventArgs e)
         {
-            if (cicle == 0)
+            if (animationState == 0)
             {
-                cicle = cicleMax; // start animation
+                animationState = animationStateMax; // start animation
             }
             
         }
@@ -264,13 +272,13 @@ namespace ColorProbe
             }
         }
 
-        int cicle = 0;
-        int cicleMax = 100;
+        int animationState = 0;
+        int animationStateMax = 100;
 
         private void timerAnimation_Tick(object sender, EventArgs e)
         {
-            if (cicle > 0) {
-                --cicle;
+            if (animationState > 0) {
+                --animationState;
                 this.Invalidate();
             }
         }
