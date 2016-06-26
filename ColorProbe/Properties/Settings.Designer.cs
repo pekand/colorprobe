@@ -70,5 +70,17 @@ namespace ColorProbe.Properties {
                 this["TopMost"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Oreintation {
+            get {
+                return ((int)(this["Oreintation"]));
+            }
+            set {
+                this["Oreintation"] = value;
+            }
+        }
     }
 }
