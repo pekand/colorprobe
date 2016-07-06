@@ -31,6 +31,13 @@ namespace ColorProbe
             this.TopMost = Properties.Settings.Default.TopMost;
             this.orientation = Properties.Settings.Default.Oreintation;
 
+            if (!this.IsOnScreen(this)) {
+                this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+                this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+                this.WindowState = FormWindowState.Normal;
+                animationState = 100;
+            }
+
             // restore previou color for selector
             Color color = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.Selector);
             this.selector = color;
@@ -450,6 +457,23 @@ namespace ColorProbe
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        // check if form is on screen
+        public bool IsOnScreen(Form form)
+        {
+            Screen[] screens = Screen.AllScreens;
+            foreach (Screen screen in screens)
+            {
+                Point formTopLeft = new Point(form.Left, form.Top);
+
+                if (screen.WorkingArea.Contains(formTopLeft))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
